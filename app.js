@@ -57,10 +57,12 @@ function fillImages(){
     imgObjArr[imgOne].viewed++;
     imgObjArr[imgTwo].viewed++;
     imgObjArr[imgThree].viewed++;
-    var userOptions = document.getElementById('user_options');
-    for (var k = 0; k < pageArray.length; k++) {
-      userOptions.innerHTML = '<li><img src ="' + pageArray[k].path + '"></li>';
-    }
+    var optionOne = document.getElementById('option_one');
+    optionOne.innerHTML = '<img src="' + pageArray[0].path + '">'
+    var optionTwo = document.getElementById('option_two');
+    optionTwo.innerHTML = '<img src="' + pageArray[1].path + '">'
+    var optionThree = document.getElementById('option_three');
+    optionThree.innerHTML = '<img src="' + pageArray[2].path + '">'
   }
 };
 

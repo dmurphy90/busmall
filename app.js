@@ -23,11 +23,11 @@ function Merch (name){
   this.viewed = 0;
   this.clicked = 0;
 };
-
+//makes objects when images are called upon
 for (var i = 0; i < imgDir.length; i++){
   imgObjArr.push(new Merch(imgDir[i]));
 }
-
+//random num generator
 function randomNum(){
   var max = imgDir.length - 1;
   var min = 0;
@@ -38,7 +38,7 @@ function randomNum(){
   return randomInt;
   console.log('random num:', randomInt);
 };
-
+//function to remove duplicates
 function compareNum(){
   imgOne = randomNum();
   imgTwo = randomNum();
@@ -53,7 +53,7 @@ function compareNum(){
   prevTwo = imgTwo;
   prevThree = imgThree;
 };
-
+//pushes images into list item placeholders
 function fillImages(){
   compareNum();
   var pageArray = [];
@@ -72,20 +72,18 @@ function fillImages(){
   console.log('img 2 shown', imgObjArr[imgTwo].viewed);
   console.log('img 3 shown', imgObjArr[imgThree].viewed);
 };
-
-
+//function executed upon clicking
 function selectChoice(){
   console.log(event.target);
   if (totalClicks < 26) {
     fillImages();
-    this.clicks++;
-    console.log(this.clicks);
+    imgObjArr[i].clicked++;
+    console.log(imgObjArr[i].clicked);
   } else {
     alert('Thank you for participating in our study!');
   }
 }
-
-
+//event listeners for clicking
 optionOne.addEventListener('click', selectChoice);
 optionTwo.addEventListener('click', selectChoice);
 optionThree.addEventListener('click', selectChoice);

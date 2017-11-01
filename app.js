@@ -1,16 +1,10 @@
 'use strict';
 
-// var userOptions = document.getElementById('user_options');
-// var picOne = document.getElementById('pic_one');
-// var picTwo = document.getElementById('pic_two');
-// var picThree = document.getElementById('pic_three');
 var optionOne = document.getElementById('option_one');
 var optionTwo = document.getElementById('option_two');
 var optionThree = document.getElementById('option_three');
 var imgDir = [
   'bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
-// var imgId = [
-//   'id-1', 'id-2', 'id-3', 'id-4', 'id-5', 'id-6', 'id-7', 'id-8', 'id-9', 'id-10', 'id-11', 'id-12', 'id-13', 'id-14', 'id-15', 'id-16', 'id-17', 'id-18', 'id-19', 'id-20'];
 var imgObjArr = [];
 var imgOne;
 var imgTwo;
@@ -90,7 +84,39 @@ function selectChoice(event){
     fillImages();
   } else {
     alert('Thank you for participating in our study!');
+    buildTable();
   }
+}
+
+function buildTable(){
+  var imgTitle = [];
+  var graphData = [];
+  for (var i = 0; i < imgDir.length; i++){
+    imgTitle.push(imgDir[i]);
+  }
+  console.log('bar name:', imgTitle);
+
+  for (var j = 0; j < imgObjArr.length; j++){
+    graphData.push(imgObjArr[j].numClicks);
+  }
+  console.log('bar data:', graphData);
+
+  var canvas = document.getElementById('chart');
+  var ctx = canvas.getContext('2d');
+
+  var myPieChart = new Chart(ctx,{
+    type: 'pie',
+    data: {
+      labels: imgTitle,
+      datasets: [{
+        label: 'Total Number of Clicks',
+        data: graphData,
+        backgroundColor: ['#f6b6c6', '#f6b6c6', '#32fd33', '#b5c569', '#6d2c4d', '#604c0c', '#661930', '#89b6c2', '#f0c64b', '#4a4cdf', '#ae292d', '#a196c7', '#c7a0a2', '#3962b5', '#55adee', '#c11068', '#59794a', '#ea5c6c']
+    }],
+  },
+    options: {}
+
+  });
 }
 
 //counts clicks for pictures

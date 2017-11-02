@@ -112,8 +112,8 @@ function selectChoice(event){
     fillImages();
   } else {
     alert('Thank you for participating in our study!');
+    save();
     buildTable();
-    // updateLocalStorage();
   }
 }
 //creates pie chart invoked when user hits 25 choices

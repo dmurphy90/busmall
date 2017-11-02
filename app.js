@@ -5,7 +5,6 @@ var optionTwo = document.getElementById('option_two');
 var optionThree = document.getElementById('option_three');
 var imgDir = [
   'bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
-var imgObjArr = [];
 var imgOne;
 var imgTwo;
 var imgThree;
@@ -13,6 +12,30 @@ var prevOne;
 var prevTwo;
 var prevThree;
 var totalClicks = 0;
+var imgObjArr = [];
+var savedArr = [];
+
+if (localStorage.images) {
+  savedArr = localStorage.images.split(',');
+} else {
+  savedArr = [];
+}
+
+function save() {
+  for (var i = 0; i < imgObjArr.length; i++) {
+    // if (i === imgObjArr.length - 1)
+    //   savedArr.push(imgObjArr[i]);
+    // break;
+    // savedArr.push(imgObjArr[i] + '^');
+    savedArr.push([imgObjArr[i].name, imgObjArr[i].numClicks]);
+  }
+  localStorage.images = savedArr;
+  console.log('saved arr', savedArr);
+}
+
+function load() {
+  console.log('local storage version:', localStorage.images);
+}
 
 function Merch (name){
   this.name = name;
@@ -25,6 +48,11 @@ function Merch (name){
 for (var i = 0; i < imgDir.length; i++){
   imgObjArr.push(new Merch(imgDir[i]));
 }
+
+// function save() {
+//   localStorage.imgObjArr = imgObjArr;
+// };
+
 //random num generator
 function randomNum(){
   var max = imgDir.length - 1;
@@ -80,14 +108,15 @@ function selectChoice(event){
   imgObjArr[k].numClicks++;
   console.log('hey', imgObjArr[k]);
   console.log('target clicks:', imgObjArr[k].numClicks);
-  if (totalClicks < 26) {
+  if (totalClicks < 25) {
     fillImages();
   } else {
     alert('Thank you for participating in our study!');
     buildTable();
+    // updateLocalStorage();
   }
 }
-
+//creates pie chart invoked when user hits 25 choices
 function buildTable(){
   var imgTitle = [];
   var graphData = [];
@@ -112,27 +141,19 @@ function buildTable(){
         label: 'Total Number of Clicks',
         data: graphData,
         backgroundColor: ['#f6b6c6', '#f6b6c6', '#32fd33', '#b5c569', '#6d2c4d', '#604c0c', '#661930', '#89b6c2', '#f0c64b', '#4a4cdf', '#ae292d', '#a196c7', '#c7a0a2', '#3962b5', '#55adee', '#c11068', '#59794a', '#ea5c6c']
-    }],
-  },
+     }],
+   },
     options: {}
 
   });
 }
 
-//counts clicks for pictures
-// function clicksTotal(){
-//   var clickedImageId = this.getAttribute('imgiId');
-//   console.log(clickedImageId);
-//   console.log(imgDir.length);
-//   for (var h = 0; h < imgDir.length; h++){
-//     if(clickedImageSrc === imgDir[h].imgId){
-//       imgDir[h].clicked++;
-//     }
-//   }
-// }
 
-// clicksTotal();
-//event listeners for clicking
+//event listeners for clicking on pictures
 optionOne.addEventListener('click', selectChoice);
 optionTwo.addEventListener('click', selectChoice);
 optionThree.addEventListener('click', selectChoice);
+
+// function updateLocalStorage(){
+//   localStorage.setItem('savedArr', JSON.stringify(savedArr));
+// };

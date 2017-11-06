@@ -12,29 +12,21 @@ var prevOne;
 var prevTwo;
 var prevThree;
 var totalClicks = 0;
-var imgObjArr = [];
-var savedArr = [];
-
-if (localStorage.images) {
-  savedArr = localStorage.images.split(',');
-} else {
-  savedArr = [];
-}
+var saveArr = [];
 
 function save() {
-  for (var i = 0; i < imgObjArr.length; i++) {
-    // if (i === imgObjArr.length - 1)
-    //   savedArr.push(imgObjArr[i]);
-    // break;
-    // savedArr.push(imgObjArr[i] + '^');
-    savedArr.push([imgObjArr[i].name, imgObjArr[i].numClicks]);
+  if (saveArr = []) {
+    saveArr.push(JSON.stringify(imgObjArr));
+    localStorage.saveArr = saveArr;
   }
-  localStorage.images = savedArr;
-  console.log('saved arr', savedArr);
 }
 
 function load() {
-  console.log('local storage version:', localStorage.images);
+  if (localStorage.saveArr) {
+    saveArr = localStorage.saveArr.split(',');
+    saveArr = JSON.parse(saveArr);
+    imgObjArr = saveArr;
+  }
 }
 
 function Merch (name){
@@ -45,10 +37,15 @@ function Merch (name){
   // this.imgId = id;
 };
 //makes objects when images are called upon
-for (var i = 0; i < imgDir.length; i++){
-  imgObjArr.push(new Merch(imgDir[i]));
+var generateImages = function(arr){
+  var imgObjArr = [];
+  for (var i = 0; i < arr.length; i++){
+    imgObjArr.push(new Merch(imgDir[i]));
+  }
+  return imgObjArr;
 }
 
+var imgObjArr = generateImages(imgDir);
 // function save() {
 //   localStorage.imgObjArr = imgObjArr;
 // };
@@ -140,9 +137,9 @@ function buildTable(){
       datasets: [{
         label: 'Total Number of Clicks',
         data: graphData,
-        backgroundColor: ['#f6b6c6', '#f6b6c6', '#32fd33', '#b5c569', '#6d2c4d', '#604c0c', '#661930', '#89b6c2', '#f0c64b', '#4a4cdf', '#ae292d', '#a196c7', '#c7a0a2', '#3962b5', '#55adee', '#c11068', '#59794a', '#ea5c6c']
-     }],
-   },
+        backgroundColor: ['#f6b6c6', '#e59c50', '#32fd33', '#b5c569', '#6d2c4d', '#604c0c', '#661930', '#89b6c2', '#f0c64b', '#4a4cdf', '#ae292d', '#a196c7', '#c7a0a2', '#3962b5', '#55adee', '#c11068', '#59794a', '#ea5c6c', '#ed84f5']
+      }],
+    },
     options: {}
 
   });
@@ -157,3 +154,4 @@ optionThree.addEventListener('click', selectChoice);
 // function updateLocalStorage(){
 //   localStorage.setItem('savedArr', JSON.stringify(savedArr));
 // };
+load();
